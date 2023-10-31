@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 
 const HomePage = () => {
   const [movies, setMovies] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState(
     'Something went wrong! Try again later.'
