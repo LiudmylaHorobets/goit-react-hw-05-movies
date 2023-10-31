@@ -17,7 +17,7 @@ const MovieDetailsPage = () => {
   const location = useLocation();
 
   const [movie, setMovie] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   const backLinkRef = useRef(location?.state?.from ?? '/');
@@ -37,52 +37,49 @@ const MovieDetailsPage = () => {
     getMovieDetails();
   }, [movieId]);
 
-  return (
-    isLoading,
-    error,
-    (
-      <MovieDetailsWrapper>
+return (
+    <MovieDetailsWrapper>
+      <div>
         <div>
-          <div>
-            <Link to={backLinkRef.current} className="goBackLink">
-              Go back
-            </Link>
-            {movie && (
-              <div className="postList">
-                {' '}
-                <img
-                  src={
-                    movie.poster_path
-                      ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
-                      : 'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700'
-                  }
-                  alt={movie.title}
-                />
-                <div className="description">
-                  <h3>{movie.title}</h3>
-                  <div>{movie.overview}</div>
-                  <p>Average: {movie.vote_average}</p>
-                  <p>Release date: {movie.release_date}</p>
-                </div>
+          <Link to={backLinkRef.current} className="goBackLink">
+            Go back
+          </Link>
+          {isLoading ? (
+            <div>Loading...</div>
+          ) : (
+            <div className="postList">
+              <img
+                src={
+                  movie.poster_path
+                    ? `https://image.tmdb.org/t/p/w300${movie.poster_path}`
+                    : 'https://ireland.apollo.olxcdn.com/v1/files/0iq0gb9ppip8-UA/image;s=1000x700'
+                }
+                alt={movie.title}
+              />
+              <div className="description">
+                <h3>{movie.title}</h3>
+                <div>{movie.overview}</div>
+                <p>Average: {movie.vote_average}</p>
+                <p>Release date: {movie.release_date}</p>
               </div>
-            )}
-            <ul>
-              <li>
-                <Link to={'cast'}>Cast</Link>
-              </li>
-              <li>
-                <Link to={'reviews'}>Reviews</Link>
-              </li>
-            </ul>
-          </div>
-
-          <Suspense fallback={<div>Loading...</div>}>
-            <Outlet />
-          </Suspense>
+            </div>
+          )}
+          <ul>
+            <li>
+              <Link to={'cast'}>Cast</Link>
+            </li>
+            <li>
+              <Link to={'reviews'}>Reviews</Link>
+            </li>
+          </ul>
         </div>
-      </MovieDetailsWrapper>
-    )
+      </div>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
+    </MovieDetailsWrapper>
   );
 };
+
 
 export default MovieDetailsPage;
